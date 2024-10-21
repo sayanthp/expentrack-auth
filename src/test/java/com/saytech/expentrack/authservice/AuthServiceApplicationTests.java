@@ -1,4 +1,4 @@
-package com.expentrack.auth_service;
+package com.saytech.expentrack.authservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
