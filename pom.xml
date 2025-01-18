@@ -56,12 +56,12 @@
 		</dependency>
 
 		<!-- Spring Boot DevTools for auto-reload during development -->
-		<dependency>
+		<!--<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
-		</dependency>
+		</dependency>-->
 
 		<!-- Spring Boot Test Starter for unit tests -->
 		<dependency>
@@ -88,6 +88,17 @@
 			<artifactId>modelmapper</artifactId>
 			<version>3.0.0</version>
 		</dependency>
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+
 	</dependencies>
 
 	<dependencyManagement>

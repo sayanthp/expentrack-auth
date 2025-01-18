@@ -1,5 +1,6 @@
 package com.saytech.expentrack.authservice.service;
 
+import com.saytech.expentrack.authservice.dto.LoginDTO;
 import com.saytech.expentrack.authservice.dto.ResponseDTO;
 import com.saytech.expentrack.authservice.dto.UserDTO;
 import com.saytech.expentrack.authservice.entity.User;
@@ -30,31 +31,34 @@ public class AuthService {
 
     public ResponseEntity<ResponseDTO> registerUser(UserDTO userDTO) {
         if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body( new ResponseDTO(userDTO.getUsername(), "Email already exists","" ));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body( new ResponseDTO(userDTO.getUsername(), "Email already exists","" ,null));
         }
         if (userRepository.findByUsername(userDTO.getUsername()).isPresent()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO(userDTO.getUsername(), "Username already exists","" ));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO(userDTO.getUsername(), "Username already exists","" ,null));
         }
         User user = modelMapper.map(userDTO, User.class);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-        return ResponseEntity.status(201).body(new ResponseDTO(userDTO.getUsername(), "User registered successfully","" ));
+        return ResponseEntity.status(201).body(new ResponseDTO(userDTO.getUsername(), "User registered successfully","" ,user.getId()));
     }
 
     public Optional<User> getUserByEmail(String email) {
         return this.userRepository.findByEmail(email);
     }
 
-    public ResponseEntity<ResponseDTO> login (UserDTO userDTO) {
+    public ResponseEntity<ResponseDTO> login (LoginDTO loginDTO) {
         String token = null;
-        Optional<User> savedUser = getUserByEmail(userDTO.getEmail());
+        Optional<User> savedUser = getUserByEmail(loginDTO.getEmail());
+        String username = "";
         if (savedUser.isPresent()) {
-            if (passwordEncoder.matches(userDTO.getPassword(), savedUser.get().getPassword())) {
-                token = jwtUtil.generateToken(userDTO.getUsername());
-                return ResponseEntity.ok(new ResponseDTO(userDTO.getUsername(), "User log in successful",token));
+            User savedUserObj = savedUser.get();
+            username = savedUserObj.getUsername();
+            if (passwordEncoder.matches(loginDTO.getPassword(), savedUserObj.getPassword())) {
+                token = jwtUtil.generateToken(savedUserObj.getUsername());
+                return ResponseEntity.ok(new ResponseDTO(savedUserObj.getUsername(), "User log in successful",token, savedUserObj.getId()));
             }
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseDTO(userDTO.getUsername(), "Invalid credentials",""));
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseDTO(username, "Invalid credentials","",null));
     }
 
 }

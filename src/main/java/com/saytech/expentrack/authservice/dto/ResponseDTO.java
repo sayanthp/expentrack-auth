@@ -8,10 +8,13 @@ public class ResponseDTO {
 
     String token;
 
-    public ResponseDTO (String username, String message, String token) {
+    Long userId;
+
+    public ResponseDTO (String username, String message, String token, Long userId) {
         this.username = username;
         this.message = message;
         this.token = token;
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -36,5 +39,13 @@ public class ResponseDTO {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

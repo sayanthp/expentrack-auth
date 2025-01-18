@@ -1,5 +1,6 @@
 package com.saytech.expentrack.authservice.controller;
 
+import com.saytech.expentrack.authservice.dto.LoginDTO;
 import com.saytech.expentrack.authservice.dto.ResponseDTO;
 import com.saytech.expentrack.authservice.dto.UserDTO;
 import com.saytech.expentrack.authservice.security.JwtUtil;
@@ -26,8 +27,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseDTO> login(@Valid @RequestBody UserDTO userDTO) {
-        return authService.login(userDTO);
+    public ResponseEntity<ResponseDTO> login(@Valid @RequestBody LoginDTO loginDTO) {
+        return authService.login(loginDTO);
     }
 
 }
