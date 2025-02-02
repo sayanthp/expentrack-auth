@@ -18,8 +18,6 @@ public class UserDTO {
     @Size(min = 6)
     private String password;
 
-    // Getters and Setters
-
     public String getUsername() {
         return username;
     }

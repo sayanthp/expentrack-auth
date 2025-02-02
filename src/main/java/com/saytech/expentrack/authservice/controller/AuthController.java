@@ -3,7 +3,6 @@ package com.saytech.expentrack.authservice.controller;
 import com.saytech.expentrack.authservice.dto.LoginDTO;
 import com.saytech.expentrack.authservice.dto.ResponseDTO;
 import com.saytech.expentrack.authservice.dto.UserDTO;
-import com.saytech.expentrack.authservice.security.JwtUtil;
 import com.saytech.expentrack.authservice.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +15,6 @@ public class AuthController {
 
     @Autowired
     private AuthService authService;
-
-    @Autowired
-    private JwtUtil jwtUtil;
-
 
     @PostMapping("/register")
     public ResponseEntity<ResponseDTO> register(@Valid @RequestBody UserDTO userDTO) {
